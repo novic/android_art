@@ -611,7 +611,7 @@ extern "C" uint64_t artQuickToInterpreterBridge(ArtMethod* method, Thread* self,
     const DexFile::CodeItem* code_item = method->GetCodeItem();
     DCHECK(code_item != nullptr) << PrettyMethod(method);
     uint16_t num_regs = code_item->registers_size_;
-    void* memory = alloca(ShadowFrame::ComputeSize(num_regs));
+    void* memory = malloc(ShadowFrame::ComputeSize(num_regs));
     // No last shadow coming from quick.
     ShadowFrame* shadow_frame(ShadowFrame::Create(num_regs, nullptr, method, 0, memory));
     size_t first_arg_reg = code_item->registers_size_ - code_item->ins_size_;
