@@ -4584,7 +4584,7 @@ bool ClassLinker::LinkVirtualMethods(Thread* self, Handle<mirror::Class> klass) 
     std::unique_ptr<uint32_t[]> hash_heap_storage;
     if (hash_table_size <= kMaxStackHash) {
       hash_table_ptr = reinterpret_cast<uint32_t*>(
-          alloca(hash_table_size * sizeof(*hash_table_ptr)));
+          malloc(hash_table_size * sizeof(*hash_table_ptr)));
     } else {
       hash_heap_storage.reset(new uint32_t[hash_table_size]);
       hash_table_ptr = hash_heap_storage.get();
