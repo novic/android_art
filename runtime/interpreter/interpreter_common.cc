@@ -507,7 +507,7 @@ bool DoCall(ArtMethod* called_method, Thread* self, ShadowFrame& shadow_frame,
 
   // Allocate shadow frame on the stack.
   const char* old_cause = self->StartAssertNoThreadSuspension("DoCall");
-  void* memory = alloca(ShadowFrame::ComputeSize(num_regs));
+  void* memory = malloc(ShadowFrame::ComputeSize(num_regs));
   ShadowFrame* new_shadow_frame(ShadowFrame::Create(num_regs, &shadow_frame, called_method, 0,
                                                     memory));
 
