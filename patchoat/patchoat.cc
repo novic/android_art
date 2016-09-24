@@ -382,7 +382,7 @@ PatchOat::MaybePic PatchOat::IsOatPic(const ElfFile* oat_in) {
   return is_pic ? PIC : NOT_PIC;
 }
 
-bool PatchOat::ReplaceOatFileWithSymlink(const std::string& input_oat_filename,
+bool PatchOat::ReplaceOatFileWithSymlink(const std::string& input_oat_filename ATTRIBUTE_UNUSED,
                                          const std::string& output_oat_filename,
                                          bool output_oat_opened_from_fd,
                                          bool new_oat_out) {
@@ -402,6 +402,7 @@ bool PatchOat::ReplaceOatFileWithSymlink(const std::string& input_oat_filename,
   // Delete the original file, since we won't need it.
   TEMP_FAILURE_RETRY(unlink(output_oat_filename.c_str()));
 
+#if 0 // CopperheadOS assumes boot.oat is PIC and accesses the system boot.oat directly
   // Create a symlink from the old oat to the new oat
   if (symlink(input_oat_filename.c_str(), output_oat_filename.c_str()) < 0) {
     int err = errno;
@@ -413,6 +414,7 @@ bool PatchOat::ReplaceOatFileWithSymlink(const std::string& input_oat_filename,
   if (kIsDebugBuild) {
     LOG(INFO) << "Created symlink " << output_oat_filename << " -> " << input_oat_filename;
   }
+#endif
 
   return true;
 }
