@@ -330,7 +330,7 @@ void EnterInterpreterFromInvoke(Thread* self, ArtMethod* method, Object* receive
   }
   // Set up shadow frame with matching number of reference slots to vregs.
   ShadowFrame* last_shadow_frame = self->GetManagedStack()->GetTopShadowFrame();
-  void* memory = malloc(ShadowFrame::ComputeSize(num_regs));
+  void* memory = alloca(ShadowFrame::ComputeSize(num_regs));
   ShadowFrame* shadow_frame(ShadowFrame::Create(num_regs, last_shadow_frame, method, 0, memory));
   self->PushShadowFrame(shadow_frame);
 
